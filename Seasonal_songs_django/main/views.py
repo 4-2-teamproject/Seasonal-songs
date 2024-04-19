@@ -35,6 +35,8 @@ def winter_modal(request):
         years_list = years_str.split(",")
 
         for year in years_list:
+            if year.strip() == "2010" or year.strip() == "2011":
+                continue
             dic[year.strip()] += 1
     return JsonResponse(dic, safe=False)
 
@@ -63,6 +65,12 @@ def winter_hall_of_frame(request):
     for instance in modal_chart:
         years_str = instance.years.strip("[]")
         years_list = years_str.split(",")
+        for i in range(len(years_list)):
+            years_list[i] = years_list[i].strip()
+        while "2010" in years_list:
+            years_list.remove("2010")
+        while "2011" in years_list:
+            years_list.remove("2011")
         dic[instance.title] = len(years_list)
     
     sorted_dict = OrderedDict(sorted(dic.items(), key=lambda x: x[1], reverse=True))

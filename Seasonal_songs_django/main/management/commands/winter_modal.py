@@ -2,6 +2,7 @@ import csv
 from django.core.management.base import BaseCommand
 from main.models import Winter_Modal_chart
 
+# python manage.py winter_modal ./winter_mt3_final.csv
 class Command(BaseCommand):
     help = 'Import selected fields from a CSV file into the database'
 
