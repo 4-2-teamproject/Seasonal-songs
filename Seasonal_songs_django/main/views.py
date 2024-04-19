@@ -4,6 +4,17 @@ from collections import defaultdict, OrderedDict
 from django.http import JsonResponse
 
 # Create your views here.
+def parse_data_for_table(chart, year_):
+    dic = defaultdict(list)
+    for instance in chart:
+        years_str = instance.years.strip("[]")
+        years_list = years_str.split(",")
+
+        for year in years_list:
+            if year.strip() == year_:
+                dic[instance.title] = instance.singer
+    return dic
+
 def index(request) :
     return render(request, 'main/index.html')
 
@@ -78,12 +89,20 @@ def winter_hall_of_frame(request):
     top_3_items = dict(list(sorted_dict.items())[:3])
     return JsonResponse(top_3_items, safe=False)
 
+
 def twelve(request):
-    return render(request, 'main/spring/twelve.html')
+    dic = parse_data_for_table(Spring_Modal_chart.objects.all(), "2012")
+    return render(request, 'main/spring/twelve.html', context= {'dic' : dict(dic)})
+
+
 def thirteen(request):
-    return render(request, 'main/spring/thirteen.html')
+    dic = parse_data_for_table(Spring_Modal_chart.objects.all(), "2013")
+    return render(request, 'main/spring/thirteen.html', context= {'dic' : dict(dic)})
+
+
 def fourteen(request):
-    return render(request, 'main/spring/fourteen.html')
+    dic = parse_data_for_table(Spring_Modal_chart.objects.all(), "2014")
+    return render(request, 'main/spring/fourteen.html', context= {'dic' : dict(dic)})
 def fifteen(request):
     return render(request, 'main/spring/fifteen.html')
 def sixteen(request):
@@ -107,7 +126,8 @@ def twentythree(request) :
 def twelve_w(request):
     return render(request, 'main/winter/twelve_w.html')
 def thirteen_w(request):
-    return render(request, 'main/winter/thirteen_w.html')
+    dic = parse_data_for_table(Winter_Modal_chart.objects.all(), "2013")
+    return render(request, 'main/winter/thirteen_w.html', context= {'dic' : dict(dic)})
 def fourteen_w(request):
     return render(request, 'main/winter/fourteen_w.html')
 def fifteen_w(request):

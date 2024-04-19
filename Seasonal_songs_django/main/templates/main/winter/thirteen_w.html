@@ -12,6 +12,21 @@
     <body>
         {% include 'header_w.html' %}
         {% include 'category_w.html' %}
+
+        <!-- 표 그리는 부분입니다. -->
+        <table border="1">
+            <tr>
+                <th>노래</th>
+                <th>가수</th>
+            </tr>
+            {% for title, singer in dic.items %}
+            <tr>
+                <td>{{ title }}</td>
+                <td>{{ singer }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        
     </body>
     {% include 'footer_w.html' %}
 </html>
